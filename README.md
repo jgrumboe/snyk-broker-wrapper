@@ -94,7 +94,9 @@ gcloud beta run deploy $SERVICENAME \
 After deployment we get back the URL and need to update our service with the BROKER_CLIENT_URL env var.
 
 ```
-url=$(gcloud run services describe $SERVICENAME --platform=managed --region=$REGION  --format 'value(status.url)')
+url=$(gcloud run services describe $SERVICENAME \
+--platform=managed --region=$REGION  --format 'value(status.url)')
 
-gcloud run services update $SERVICENAME --platform=managed --region=$REGION --update-env-vars BROKER_CLIENT_URL=$url
+gcloud run services update $SERVICENAME \
+--platform=managed --region=$REGION --update-env-vars BROKER_CLIENT_URL=$url
 ```
