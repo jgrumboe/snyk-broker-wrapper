@@ -1,4 +1,4 @@
-# RBMH Snyk Broker Jira wrapper
+# Snyk Broker Jira wrapper
 
 This is a wrapper around the snyk broker (https://github.com/snyk/broker)
 and the docker imager snyk/broker:jira.
