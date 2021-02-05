@@ -38,10 +38,10 @@ We need the wrapper to store required tokens into GCP secrets manager.
 - Create secrets to hold the token
 
   ```
-  gcloud secrets create snyk-broker-token --locations=$REGION
+  gcloud secrets create snyk-broker-token
   echo -n "$BROKER_TOKEN" | gcloud secrets versions add snyk-broker-token --data-file=-
 
-  gcloud secrets create snyk-broker-jira-password --locations=$REGION
+  gcloud secrets create snyk-broker-jira-password
   echo -n "$JIRA_PASSWORD" | gcloud secrets versions add snyk-broker-jira-password --data-file=-
   ```
 
@@ -99,4 +99,15 @@ url=$(gcloud run services describe $SERVICENAME \
 
 gcloud run services update $SERVICENAME \
 --platform=managed --region=$REGION --update-env-vars BROKER_CLIENT_URL=$url
+```
+
+## Cleanup all resources
+
+```
+gcloud run services delete $SERVICENAME --quiet
+gcloud secrets delete snyk-broker-token --quiet
+gcloud secrets delete snyk-broker-jira-password --quiet
+gcloud iam service-accounts delete \
+   $SERVICEACCOUNT@$PROJECT.iam.gserviceaccount.com --quiet 
+gcloud container images delete $REGISTRY/$IMAGENAME --force-delete-tags  --quiet
 ```
